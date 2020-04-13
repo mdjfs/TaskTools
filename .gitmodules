@@ -1,0 +1,3 @@
+[submodule "server"]
+	path = server
+	url = /home/mdjfs/Documentos/app/server
