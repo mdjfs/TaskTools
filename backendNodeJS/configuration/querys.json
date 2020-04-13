@@ -1,5 +1,0 @@
-{
-    "insert.users":"INSERT INTO users (username_users, email_users, password_users, datecreation_users) VALUES ($1, $2, $3, $4)",
-    "select.users.where.username":"SELECT *FROM users WHERE username_users=$1",
-    "select.users.where.email":"SELECT *FROM users WHERE email_users=$1"
-}
