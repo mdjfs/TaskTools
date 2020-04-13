@@ -43,9 +43,9 @@ function Form(props) {
     var key = Object.keys(dataforms)[i];
     var json = dataforms[key];
     if (forms == null) {
-      renderforms.push(React.createElement("input", { type: json.type, placeholder: json.placeholder }));
+      renderforms.push(React.createElement("input", { type: json.type, onKeyUp: json.onkeyup, placeholder: json.placeholder }));
     } else {
-      renderforms.push(React.createElement("input", { type: json.type, placeholder: json.placeholder }));
+      renderforms.push(React.createElement("input", { type: json.type, onKeyUp: json.onkeyup, placeholder: json.placeholder }));
     }
     renderforms.push(React.createElement("br", null));
   }
@@ -117,13 +117,36 @@ function Index() {
 }
 
 function Login() {
+  function sendLogin() {
+    var error = document.getElementById("error");
+    error.hidden = true;
+    var fields = document.getElementsByTagName("input");
+    var json = {};
+    for (var i = 0; i < fields.length; i++) {
+      if (i == 0) json["constraint"] = fields[i].value;else json[fields[i].placeholder] = fields[i].value;
+    }
+    var com = new Communication("login");
+    com.send("POST", json, function (response) {
+      if (response["results"].includes("error")) {
+        error.innerHTML = response["message"];
+        error.hidden = false;
+      } else {
+        Render("dashboard");
+      }
+    });
+  }
+  function listenfield(event) {
+    if (event.keyCode === 13) sendLogin();
+  }
   var forms = { "1": {
       "type": "text",
-      "placeholder": "user or email"
+      "placeholder": "user or email",
+      "onkeyup": listenfield
     },
     "2": {
       "type": "password",
-      "placeholder": "password"
+      "placeholder": "password",
+      "onkeyup": listenfield
     } };
   return React.createElement(
     "div",
@@ -144,30 +167,64 @@ function Login() {
       React.createElement("br", null),
       React.createElement(
         "div",
-        { className: "errors", hidden: true },
+        { id: "error", className: "errors", hidden: true },
         "Esto es un error !!"
       ),
       React.createElement("br", null),
-      React.createElement(Fillbutton, { id: "actionbuttonIN", innerHTML: "Sign in", onclick: function onclick() {
-          //error = document.getElementsByClassName("errors")[0];
-          //error.hidden = !error.hidden;
-        } })
+      React.createElement(Fillbutton, { id: "actionbuttonIN", innerHTML: "Sign in", onclick: sendLogin })
     )
   );
 }
 
 function Register() {
+  function sendRegister() {
+    var error = document.getElementById("error");
+    error.hidden = true;
+    var fields = document.getElementsByTagName("input");
+    var json = {};
+    for (var i = 0; i < fields.length; i++) {
+      json[fields[i].placeholder] = fields[i].value;
+    }
+    var com = new Communication("register");
+    com.send("POST", json, function (response) {
+      if (response["results"].includes("error")) {
+        error.innerHTML = response["message"];
+        error.hidden = false;
+      } else {
+        error.hidden = true;
+        jsonlogin = {
+          "constraint": fields[1].value,
+          "password": fields[2].value
+        };
+        com = new Communication("login");
+        com.send("POST", jsonlogin, function (response) {
+          if (response["results"].includes("error")) {
+            error.innerHTML = response["message"];
+            error.hidden = false;
+          } else {
+            Render("dashboard");
+          }
+        });
+      }
+    });
+  }
+  function listenfield(event) {
+    if (event.keyCode === 13) sendRegister();
+  }
   var forms = { "1": {
       "type": "text",
-      "placeholder": "username"
+      "placeholder": "username",
+      "onkeyup": listenfield
     },
     "2": {
       "type": "text",
-      "placeholder": "email"
+      "placeholder": "email",
+      "onkeyup": listenfield
     },
     "3": {
       "type": "password",
-      "placeholder": "password"
+      "placeholder": "password",
+      "onkeyup": listenfield
     } };
   return React.createElement(
     "div",
@@ -188,16 +245,17 @@ function Register() {
       React.createElement("br", null),
       React.createElement(
         "div",
-        { className: "errors", hidden: true },
+        { id: "error", className: "errors", hidden: true },
         "Esto es un error !!"
       ),
       React.createElement("br", null),
-      React.createElement(Borderbutton, { id: "actionbuttonUP", innerHTML: "Sign in", onclick: function onclick() {
-          //error = document.getElementsByClassName("errors")[0];
-          //error.hidden = !error.hidden;
-        } })
+      React.createElement(Borderbutton, { id: "actionbuttonUP", innerHTML: "Sign up", onclick: sendRegister })
     )
   );
+}
+
+function Dashboard() {
+  return React.createElement("div", { className: "dashboardpage" });
 }
 
 function Render(page) {
@@ -218,8 +276,14 @@ function Render(page) {
   if (page == "register") {
     ReactDOM.render(React.createElement(Register, null), reactContainer);
   }
+  if (page == "dashboard") {
+    ReactDOM.render(React.createElement(Dashboard, null), reactContainer);
+  }
 }
 
 window.onload = function () {
-  this.Render("index");
+  var com = new Communication("session");
+  com.send("GET", null, function (response) {
+    if (Object.entries(response).length === 0) this.Render("index");else this.Render("dashboard");
+  });
 };

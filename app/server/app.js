@@ -34,6 +34,13 @@ routes.post('/login', async (req, res) => {
     }
     });
 
+routes.get('/session', (req, res) => {
+    res.setHeader('content-type','application/json');
+    if(req.session.user != null)
+        res.send(req.session.user);
+    else
+        res.send({});
+});
 
 
 app.use('/', routes);

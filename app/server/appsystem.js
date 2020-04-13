@@ -73,6 +73,12 @@ async function Register(json, keys){
                     return SuccessMessage("You're registered.");
                 }
                 catch(err){
+                    if(err.message.includes("llave duplicada")){
+                        if(err.message.includes("email")){
+                            return ErrorMessage("Email already exists");
+                        }
+                        return ErrorMessage("User already exists");
+                    }
                     return ErrorMessage(err.message);
                 }
                 finally{
@@ -107,13 +113,21 @@ async function Login(json, keys){
                     [json[keys[0]]]);
                     result = result.rows[0];
                     if(hash.sha256(json[keys[1]]).trim() === result["password_users"].trim() ){
-                        return SuccessMessage({"message":"You're login", "ID": result["id_users"]});
+                        info = {
+                            "username": result["username_users"],
+                            "ID": result["id_users"],
+                            "email": result["email_users"]
+                        }
+                        return SuccessMessage({"message":"You're login", "info": info});
                     }
                     else{
                         return ErrorMessage("Wrong password !!");
                     }
                 }
                 catch(err){
+                    if(err.name.includes("TypeError")){
+                        return ErrorMessage("User not exists");
+                    }
                     return ErrorMessage(err.message);
                 }
                 finally{
@@ -139,6 +153,9 @@ async function Login(json, keys){
                     }
                 }
                 catch(err){
+                    if(err.name.includes("TypeError")){
+                        return ErrorMessage("User not exists");
+                    }
                     return ErrorMessage(err.message);
                 }
                 finally{

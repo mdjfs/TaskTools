@@ -25,10 +25,10 @@ function Form(props){
     var key = Object.keys(dataforms)[i];
     var json = dataforms[key];
     if (forms==null){
-      renderforms.push(<input type={json.type} placeholder={json.placeholder}></input>);
+      renderforms.push(<input type={json.type} onKeyUp={json.onkeyup} placeholder={json.placeholder}></input>);
     }
     else{
-      renderforms.push(<input type={json.type} placeholder={json.placeholder}></input>);
+      renderforms.push(<input type={json.type} onKeyUp={json.onkeyup} placeholder={json.placeholder}></input>);
     }
     renderforms.push(<br/>);
   }
@@ -77,13 +77,41 @@ function Index(){
 }
 
 function Login(){
+  function sendLogin(){
+    const error = document.getElementById("error");
+    error.hidden = true;
+    const fields = document.getElementsByTagName("input");
+    var json = {};
+    for(var i=0; i<fields.length; i++){
+      if(i==0)
+        json["constraint"] = fields[i].value
+      else
+        json[fields[i].placeholder] = fields[i].value
+    }
+    var com = new Communication("login");
+    com.send("POST", json, function(response){
+        if(response["results"].includes("error")){
+          error.innerHTML = response["message"];
+          error.hidden = false;
+        }
+        else{
+          Render("dashboard");
+        }
+    });
+  }
+  function listenfield(event){
+    if (event.keyCode === 13)
+      sendLogin();
+  }
   var forms = {"1":{
     "type":"text",
-    "placeholder":"user or email"
+    "placeholder":"user or email",
+    "onkeyup":listenfield
   },
   "2":{
     "type":"password",
-    "placeholder":"password"
+    "placeholder":"password",
+    "onkeyup":listenfield
   }};
   return (<div className="loginpage">
     <Toolbar buttons={["signup"]}></Toolbar>
@@ -92,27 +120,64 @@ function Login(){
       Don't have account? Please <a className="href"onClick={function(){
         Render("register");
       }}>Sign Up</a><br/>
-      <div className="errors" hidden>Esto es un error !!</div><br/>
-      <Fillbutton id="actionbuttonIN" innerHTML="Sign in" onclick={function(){
-              //error = document.getElementsByClassName("errors")[0];
-              //error.hidden = !error.hidden;
-            }}/>
+      <div id="error" className="errors" hidden>Esto es un error !!</div><br/>
+      <Fillbutton id="actionbuttonIN" innerHTML="Sign in" onclick={sendLogin}/>
     </div>
   </div>);
 }
 
 function Register(){
+  function sendRegister(){
+    const error =document.getElementById("error");
+    error.hidden = true;
+    const fields = document.getElementsByTagName("input");
+    var json = {};
+    for(var i=0; i<fields.length; i++){
+      json[fields[i].placeholder] = fields[i].value
+    }
+    var com = new Communication("register");
+    com.send("POST", json, function(response){
+        if(response["results"].includes("error")){
+          error.innerHTML = response["message"];
+          error.hidden = false;
+        }
+        else{
+          error.hidden = true;
+          jsonlogin={
+            "constraint":fields[1].value,
+            "password":fields[2].value
+          }
+          com = new Communication("login");
+          com.send("POST", jsonlogin, function(response){
+            if(response["results"].includes("error")){
+              error.innerHTML = response["message"];
+              error.hidden = false;
+            }
+            else{
+              Render("dashboard");
+            }
+          });
+        }
+    });
+  }
+  function listenfield(event){
+    if (event.keyCode === 13)
+      sendRegister();
+  }
   var forms = {"1":{
     "type":"text",
-    "placeholder":"username"
+    "placeholder":"username",
+    "onkeyup":listenfield
   },
   "2":{
     "type":"text",
     "placeholder":"email",
+    "onkeyup":listenfield
   },
   "3":{
     "type":"password",
-    "placeholder":"password"
+    "placeholder":"password",
+    "onkeyup":listenfield
   }};
   return (<div className="registerpage">
     <Toolbar buttons={["signin"]}></Toolbar>
@@ -121,12 +186,15 @@ function Register(){
       You have account? Please <a className="href"onClick={function(){
         Render("login");
       }}>Sign In</a><br/>
-      <div className="errors" hidden>Esto es un error !!</div><br/>
-      <Borderbutton id="actionbuttonUP" innerHTML="Sign in" onclick={function(){
-              //error = document.getElementsByClassName("errors")[0];
-              //error.hidden = !error.hidden;
-            }}/>
+      <div id="error" className="errors" hidden>Esto es un error !!</div><br/>
+      <Borderbutton id="actionbuttonUP" innerHTML="Sign up" onclick={sendRegister}/>
     </div>
+  </div>);
+}
+
+function Dashboard(){
+  return (<div className="dashboardpage">
+
   </div>);
 }
 
@@ -156,10 +224,21 @@ function Render(page){
       <Register/>,
       reactContainer
     );
+  } 
+  if(page == "dashboard"){
+    ReactDOM.render(
+      <Dashboard/>,
+      reactContainer
+    );
   }
-  
 }
 
 window.onload = function(){
-  this.Render("index");
-};
+  var com = new Communication("session");
+  com.send("GET", null, function(response){
+    if(Object.entries(response).length === 0)
+      this.Render("index");
+    else
+      this.Render("dashboard");
+  });
+}
