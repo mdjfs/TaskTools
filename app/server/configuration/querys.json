@@ -1,5 +1,13 @@
 {
     "insert.users":"INSERT INTO users (username_users, email_users, password_users, datecreation_users) VALUES ($1, $2, $3, $4)",
     "select.users.where.username":"SELECT *FROM users WHERE username_users=$1",
-    "select.users.where.email":"SELECT *FROM users WHERE email_users=$1"
+    "select.users.where.email":"SELECT *FROM users WHERE email_users=$1",
+    "insert.project":"INSERT INTO project (name_project, description_project, id_users) VALUES ($1, $2, $3)",
+    "select.project.where.id_users":"SELECT *FROM project WHERE id_users=$1",
+    "insert.task":"INSERT INTO task (name_task, description_task, id_project) VALUES ($1, $2, $3)",
+    "select.task.where.id_project":"SELECT *FROM task WHERE id_project=$1",
+    "insert.subtask":"INSERT INTO subtask (name_subtask, description_subtask, id_task) VALUES ($1, $2, $3)",
+    "select.subtask.where.id_task":"SELECT *FROM subtask WHERE id_task=$1",
+    "insert.backgrounds":"INSERT INTO backgrounds (dir, id_users, id_project) VALUES ($1, $2, $3)",
+    "select.backgrounds.where.id_project":"SELECT *FROM backgrounds where id_project=$1"
 }

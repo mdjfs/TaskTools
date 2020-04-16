@@ -12,8 +12,13 @@
     "body-parser": "^1.19.0",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
+    "express-fileupload": "^1.1.7-alpha.3",
     "express-session": "^1.17.0",
     "fs": "0.0.1-security",
+    "mime-db": "^1.43.0",
+    "mime-lookup": "0.0.2",
+    "mkdirp": "^1.0.4",
+    "path": "^0.12.7",
     "pg": "^8.0.0",
     "util": "^0.12.2"
   }
