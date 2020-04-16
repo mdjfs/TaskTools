@@ -133,7 +133,7 @@ async function Login(json, keys){
                     if(hash.sha256(json[keys[1]]).trim() === result["password_users"].trim() ){
                         info = {
                             "username": result["username_users"],
-                            "ID": result["id_users"],
+                            "id": result["id_users"],
                             "email": result["email_users"]
                         }
                         return SuccessMessage({"message":"You're login", "info": info});
@@ -199,6 +199,7 @@ async function Login(json, keys){
 function newProject(session, json, keys, callback){
     if(session != null){
         if(isAllKeys(keys, json)){
+            console.log(session);
             pool
             .query(querys["insert.project"], [json[keys[0]], json[keys[1]], session["id"]])
             .then(res => callback(SuccessMessage("Project " + json[keys[0]] + " is save"))) 

@@ -605,13 +605,16 @@ function Projects(props){
     });
   }
   function sendProject(){
+    console.log("hola");
     var com = new Communication("project");
     const fields = document.getElementsByTagName("input");
     var json = {};
     for(var i=0; i<fields.length; i++){
       json[fields[i].placeholder] = fields[i].value;
     }
-    com.send("POST", json, function(){
+    console.log(json);
+    com.send("POST", json, function(response){
+      console.log(response);
       window.location.reload();
     });
   }
