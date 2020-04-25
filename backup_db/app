@@ -1,0 +1,623 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.12 (Ubuntu 10.12-2.pgdg18.04+1)
+-- Dumped by pg_dump version 12.2 (Ubuntu 12.2-2.pgdg18.04+1)
+
+-- Started on 2020-04-25 12:37:08 -04
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+--
+-- TOC entry 205 (class 1259 OID 49369)
+-- Name: backgrounds; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.backgrounds (
+    id_backgrounds integer NOT NULL,
+    dir character varying NOT NULL,
+    id_users integer NOT NULL,
+    id_project integer NOT NULL
+);
+
+
+ALTER TABLE public.backgrounds OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 49367)
+-- Name: backgrounds_id_backgrounds_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.backgrounds_id_backgrounds_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.backgrounds_id_backgrounds_seq OWNER TO postgres;
+
+--
+-- TOC entry 3019 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: backgrounds_id_backgrounds_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.backgrounds_id_backgrounds_seq OWNED BY public.backgrounds.id_backgrounds;
+
+
+--
+-- TOC entry 199 (class 1259 OID 49321)
+-- Name: project; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.project (
+    id_project integer NOT NULL,
+    name_project character varying NOT NULL,
+    description_project character varying NOT NULL,
+    id_users integer NOT NULL
+);
+
+
+ALTER TABLE public.project OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 49319)
+-- Name: project_id_project_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.project_id_project_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.project_id_project_seq OWNER TO postgres;
+
+--
+-- TOC entry 3020 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: project_id_project_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.project_id_project_seq OWNED BY public.project.id_project;
+
+
+--
+-- TOC entry 203 (class 1259 OID 49353)
+-- Name: subtask; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.subtask (
+    id_subtask integer NOT NULL,
+    name_subtask character varying NOT NULL,
+    description_subtask character varying NOT NULL,
+    id_task integer NOT NULL
+);
+
+
+ALTER TABLE public.subtask OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 49351)
+-- Name: subtask_id_subtask_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.subtask_id_subtask_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.subtask_id_subtask_seq OWNER TO postgres;
+
+--
+-- TOC entry 3021 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: subtask_id_subtask_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.subtask_id_subtask_seq OWNED BY public.subtask.id_subtask;
+
+
+--
+-- TOC entry 201 (class 1259 OID 49337)
+-- Name: task; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.task (
+    id_task integer NOT NULL,
+    name_task character varying NOT NULL,
+    description_task character varying NOT NULL,
+    id_project integer NOT NULL
+);
+
+
+ALTER TABLE public.task OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 49335)
+-- Name: task_id_task_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.task_id_task_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.task_id_task_seq OWNER TO postgres;
+
+--
+-- TOC entry 3022 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: task_id_task_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.task_id_task_seq OWNED BY public.task.id_task;
+
+
+--
+-- TOC entry 197 (class 1259 OID 49304)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id_users integer NOT NULL,
+    username_users character varying NOT NULL,
+    email_users character varying NOT NULL,
+    password_users character(64) NOT NULL,
+    datecreation_users character varying NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 49302)
+-- Name: users_id_users_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_id_users_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_users_seq OWNER TO postgres;
+
+--
+-- TOC entry 3023 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: users_id_users_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_id_users_seq OWNED BY public.users.id_users;
+
+
+--
+-- TOC entry 2859 (class 2604 OID 49372)
+-- Name: backgrounds id_backgrounds; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.backgrounds ALTER COLUMN id_backgrounds SET DEFAULT nextval('public.backgrounds_id_backgrounds_seq'::regclass);
+
+
+--
+-- TOC entry 2856 (class 2604 OID 49324)
+-- Name: project id_project; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.project ALTER COLUMN id_project SET DEFAULT nextval('public.project_id_project_seq'::regclass);
+
+
+--
+-- TOC entry 2858 (class 2604 OID 49356)
+-- Name: subtask id_subtask; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.subtask ALTER COLUMN id_subtask SET DEFAULT nextval('public.subtask_id_subtask_seq'::regclass);
+
+
+--
+-- TOC entry 2857 (class 2604 OID 49340)
+-- Name: task id_task; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.task ALTER COLUMN id_task SET DEFAULT nextval('public.task_id_task_seq'::regclass);
+
+
+--
+-- TOC entry 2855 (class 2604 OID 49307)
+-- Name: users id_users; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id_users SET DEFAULT nextval('public.users_id_users_seq'::regclass);
+
+
+--
+-- TOC entry 3013 (class 0 OID 49369)
+-- Dependencies: 205
+-- Data for Name: backgrounds; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.backgrounds (id_backgrounds, dir, id_users, id_project) FROM stdin;
+7	mdjfs/fondo.jpg	1	3
+10	mdjfs/sdf.png	1	7
+11	mdjfs/tasks.jpg	1	14
+16	https://diccionarioactual.com/wp-content/uploads/2017/04/waifu.png	1	16
+25	mdjfs/10/fondo.jpg	1	10
+26	mdjfs/11/fondo.jpg	1	11
+28	mdjfs/15/fondo.jpg	1	15
+32	https://media.shoanime.com/2018/06/918bb2f0adb942389762660d91125490.jpg	1	9
+33	https://besthqwallpapers.com/Uploads/20-12-2019/116409/thumb2-nezuko-kamado-winter-kimetsu-no-yaiba-manga-kamado-nezuko.jpg	1	5
+35	https://www.logaster.com.es/blog/wp-content/uploads/sites/4/2019/01/4-min.jpg	101	30
+37	mdjfs/13/Screenshot_2020-04-12-22-34-27-465_com.instagram.android.jpg	1	13
+38	marcosfuen/32/IMG_20200415_231447.jpg	108	32
+42	something/33/IMG_20200415_231447.jpg	109	33
+\.
+
+
+--
+-- TOC entry 3007 (class 0 OID 49321)
+-- Dependencies: 199
+-- Data for Name: project; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.project (id_project, name_project, description_project, id_users) FROM stdin;
+3	cooking	need cooking better !!!!!	1
+4	cooking	need cooking better !!!!!	1
+5	proyecto	nuevo	1
+6	nuevo	proyecto	1
+7	vamos a ver	cuando explota	1
+8	dale	que si explota	1
+9	dale	dale xd	1
+10	asdfasdf	asdfasdf	1
+11	asdfasdf	asdfasdf	1
+12	asdfasdf	asdfasdf	1
+13	asdfasdf	asdfasdf	1
+14	asdfasdf	asdfasdf	1
+15	adsfasdf	asdfasfd	1
+16	proyectohipermamadisimoconelnombrelarguisimo	proyectohipermamadisimoconelnombrelarguisimoproyectohipermamadisimoconelnombrelarguisimoproyectohipermamadisimoconelnombrelarguisimoproyectohipermamadisimoconelnombrelarguisimoproyectohipermamadisimoconelnombrelarguisimoproyectohipermamadisimoconelnombrelarguisimo	1
+28	asdf	asdf.	1
+30	newproject	mynewproject	101
+31	Hacer la tarea	Tengo que hacer el proyecto	106
+32	hacer la pagina	hacer el proyecto de web	108
+33	something	Something	109
+34	Other		109
+\.
+
+
+--
+-- TOC entry 3011 (class 0 OID 49353)
+-- Dependencies: 203
+-- Data for Name: subtask; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.subtask (id_subtask, name_subtask, description_subtask, id_task) FROM stdin;
+1	obtain milk	oh no, coronavirus	2
+2	adfasdfas	asdfasdf	2
+3	asdfasdf	asdfasdf	2
+4	adfasdf	asdfasdf	2
+5	asdfasdf	asdfasdf	2
+6	asdfasdf	asdfasdf	2
+7	otracosita que hacer	porque no hacerla pues?	8
+8	subtask	subtask	12
+9	subtask	subtask	12
+10	newtask		13
+11	newtask		13
+12	newtask		13
+13	newtask		13
+14	newtask		13
+15	Something	Something	16
+16	Something	Something	16
+17	Something		17
+\.
+
+
+--
+-- TOC entry 3009 (class 0 OID 49337)
+-- Dependencies: 201
+-- Data for Name: task; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.task (id_task, name_task, description_task, id_project) FROM stdin;
+2	cook cake	very good	3
+3	new	new	3
+4			3
+5	new	new	3
+6	ne	ne	3
+7	xd	xd.	3
+8	nuevotaskxd	jeje	4
+9	mynewtask	descriptionofmytask	30
+10	task	task	30
+11	task	task	30
+12	task	task	30
+13	newtask	newtask	11
+14	newtask		11
+15	newtask		11
+16	Something	Something	33
+17	Something	Something	33
+18	Something		33
+\.
+
+
+--
+-- TOC entry 3005 (class 0 OID 49304)
+-- Dependencies: 197
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (id_users, username_users, email_users, password_users, datecreation_users) FROM stdin;
+1	mdjfs	buildobj@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	5/3/2020 - 23:7:54
+5	mdjefs	buildobej@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	5/3/2020 - 23:26:15
+21	mdjeefs	holea@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	6/3/2020 - 0:17:24
+24	buenas	buenas@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	6/3/2020 - 0:40:41
+27	pruebajeje	pruebajeje@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	13/3/2020 - 17:48:36
+30	prueba40	prueba40@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	13/3/2020 - 18:29:28
+31	marcos	marcos@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	13/3/2020 - 18:42:56
+32	marcosf	marcosf@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	13/3/2020 - 18:48:14
+33	asdfasdf	asdfasdf@gmail.com	OJIFkE1se7g/xnZROREibyviW/FGVha7mylYcQCrFBQ=                    	13/3/2020 - 18:48:57
+34	asdfss	asdfs@gmail.com	bgBBS9m++uYs5BjiRLWqpvg2rSO9VxC4caO+rkJLGcA=                    	13/3/2020 - 18:57:2
+35	gsdgsdfgsd	ewfwef@gmail.com	Qhx213Vjr6GRSEawEL0WTzlb00whAuXpngy5zxc8HYc=                    	13/3/2020 - 18:58:11
+36	fadsfas	fasas@gmail.com	l7sQH57PMf/TeI13waAsQxwWB+gWiqpT44qJ1EUyRCg=                    	13/3/2020 - 18:58:47
+37	asdfasdfklj	kl4@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	13/3/2020 - 18:59:47
+38	masadf	asfas@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	13/3/2020 - 19:0:23
+39	asdfasdfasdf	aseraser@gmail.com	WZagq4dFGwxXO6uEIpO3ADZGc5EhQv7GsC8oKzIEXV4=                    	13/3/2020 - 19:1:20
+40	gfsdgsfds	fgfgdf@gmail.com	MyNLgAgI+NMj3BPR+28ZA+iGqeLSP0B71Ow25Vt0te8=                    	13/3/2020 - 19:3:6
+42	asdfasdfsdf	asdfadsdf@gmail.com	JBP7NwmwWTnwTPLpL30Il/wllvmtC4qeqFXHv+uq6JI=                    	13/3/2020 - 19:5:2
+49	mdjfss	marcos.fuenmayorhtc@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	13/3/2020 - 19:43:3
+51	nuevouser	nuevouser@gmail.com	K1vgLGZfS1Y9Jx22gs9Fk2mi7GJ1NEgFtMwq3BN4Tp0=                    	14/3/2020 - 18:49:48
+52	otrouser	otrouser@gmail.com	XXMpOSE6QlY+jLW0PMnk2tLSFwg/hOxXreLTdsR7ZRM=                    	14/3/2020 - 18:52:52
+53	pepe	elbuenpepe@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	14/3/2020 - 20:43:55
+54	muchosusuarios	ojala@gmail.com	jXwmFJi0SSk1XfX2XMeE6WJIxPIPIl1uUzwHKaV/dZ8=                    	14/3/2020 - 20:57:10
+55	asdf	jeje@gmail.com	qqlAJmTxpB9A67xSyZk+tmrrNmYClY/fqig7ceZNsSM=                    	14/3/2020 - 20:58:26
+56	jaimito	jaimito@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	14/3/2020 - 22:54:19
+57	sadfgasdfasdfa	hola@gmail.com	8qMc6iZ6kKzqaa213UAhUPfE0DqYUzDwCVZM4+GXfBM=                    	15/3/2020 - 1:6:50
+59	hola56932ejeje	holasd@gmail.com	X9kkYl9qsWoZzJgHx8UGrhgTSQ5LpnX4Q9WhDguqzbg=                    	15/3/2020 - 1:7:48
+60	quier43el3r2nomb	holachao@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	15/3/2020 - 1:8:22
+62	nuevousermas	nuevousermas@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	15/3/2020 - 19:54:53
+65	nuevousermads	nuevousermdas@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	15/3/2020 - 19:55:2
+66	nuevousermasasdf	nuevoXD@gmail.com	BxI+H0gjVsQV9oRAejuHI+ELLLvAuPzWKCxJ03ycGrw=                    	15/3/2020 - 19:56:8
+67	nuevouserdf	asdhola@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	15/3/2020 - 19:57:47
+68	dfagsadfgsdg	afsdf@gmail.com	GO4kFQ3LHZZ1Kk1t0PIN/Yuow4Un5AqoUJt63s94+cY=                    	15/3/2020 - 20:14:29
+69	sdfgsdfg	adcsf@gmail.com	JBP7NwmwWTnwTPLpL30Il/wllvmtC4qeqFXHv+uq6JI=                    	15/3/2020 - 20:16:2
+70	asdfewe	ewv@gmail.com	JBP7NwmwWTnwTPLpL30Il/wllvmtC4qeqFXHv+uq6JI=                    	15/3/2020 - 20:17:42
+71	dsfsew	qwedsf@gmail.com	UjRjBB75/6KVDYRQ/rNMiLyGksQMnPPJnc33XicCKeI=                    	15/3/2020 - 20:22:49
+72	asdfade	qweq@gmail.com	+ahGBFyQMSQ0yh7+dfTaJzYuscRxhVMh4QtUaHcGT6c=                    	15/3/2020 - 20:28:30
+74	asdfewewqer	sawe@gmail.com	JBP7NwmwWTnwTPLpL30Il/wllvmtC4qeqFXHv+uq6JI=                    	15/3/2020 - 20:38:6
+75	fsdwe	werw@gmail.com	JBP7NwmwWTnwTPLpL30Il/wllvmtC4qeqFXHv+uq6JI=                    	15/3/2020 - 20:40:38
+76	asdeew	wesdf@gmail.com	tVEmo5+bEXCjLm9h5KaUxFI15awRwF7Nb/Y5XeahEYc=                    	15/3/2020 - 20:48:29
+77	fdasweqeqw	qwe@gmail.com	8OTC92xYkW7CWPJGhRvqCR0U1CR6L8PhhpRGGxgW4Ts=                    	15/3/2020 - 20:49:28
+79	qeqwe	qfwe@gmail.com	8OTC92xYkW7CWPJGhRvqCR0U1CR6L8PhhpRGGxgW4Ts=                    	15/3/2020 - 20:50:36
+80	asdffgh	hgqwe@gmail.com	Fr7WNouLFULNbrh/W8INyDC0GiJY3eQEOKdfpwHSTpo=                    	15/3/2020 - 20:54:10
+81	ejh	rth@gmail.com	vbI3v4xd5rYLoeLc/jZPwk9YPlaNFoL4UanQ8RpFx40=                    	15/3/2020 - 20:56:48
+82	fadsfasf	asdfsa@gmail.com	jW01zHC6FPvh28owV3kRNVEvTMh8l+QiADYREfS0U2Q=                    	15/3/2020 - 21:18:9
+83	vzxcvsda	asdfa@gmail.com	FsRHgy8zf3iuKCouAUM2jZW6g/G/eCm1KoU/0MEmtDQ=                    	15/3/2020 - 21:19:45
+84	asdfasdfwre	aqwwe@gmail.com	8OTC92xYkW7CWPJGhRvqCR0U1CR6L8PhhpRGGxgW4Ts=                    	15/3/2020 - 21:20:23
+85	asdfaresdf	asdfasa@gmail.com	4Bg45tAaylF6f4U7Sc0j0ARZK2aBYT1YpqmmbcYwcDw=                    	15/3/2020 - 21:21:44
+86	asdfweqwe	qweqwr@gmail.com	vbI3v4xd5rYLoeLc/jZPwk9YPlaNFoL4UanQ8RpFx40=                    	15/3/2020 - 21:23:27
+87	qeqwerq	qweqwe@gmail.com	Fr7WNouLFULNbrh/W8INyDC0GiJY3eQEOKdfpwHSTpo=                    	15/3/2020 - 21:24:8
+88	sdgweq	wqefd@gmail.com	J7D0EN77YujDei+UmoCT1ReoCZLZQ9FaKsxp0SMLXKg=                    	15/3/2020 - 21:25:31
+89	gfdssgd	sdfgsdg@gmail.com	JBP7NwmwWTnwTPLpL30Il/wllvmtC4qeqFXHv+uq6JI=                    	15/3/2020 - 21:26:55
+90	hgfghfh	sdfsdf@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	15/3/2020 - 21:27:24
+92	qweqwe	qweweqwe@gmail.com	tVEmo5+bEXCjLm9h5KaUxFI15awRwF7Nb/Y5XeahEYc=                    	15/3/2020 - 21:31:54
+93	qwqweg	qweqgw@gmail.com	bwsWt223rBqeiGre1yFtU6Uvm2aOz2bjX7DzE66bPjk=                    	15/3/2020 - 21:35:44
+94	mdjfqwers	asdf@gmail.com	RL6XiCCqHF/DgXTdglRfNlqI2Ekem1HX+RWQL2THkfI=                    	15/3/2020 - 21:36:26
+95	fasdfaswq	qweqwef2@gmail.com	jW01zHC6FPvh28owV3kRNVEvTMh8l+QiADYREfS0U2Q=                    	15/3/2020 - 21:37:7
+96	qwerfas	asdas@gmail.com	JBP7NwmwWTnwTPLpL30Il/wllvmtC4qeqFXHv+uq6JI=                    	15/3/2020 - 21:37:29
+97	anewuser	anewuser@gmail.com	C4kUcOCTPg458auzT8kUfiOLgswwF1+G7W+uxQ+ELRc=                    	15/3/2020 - 21:41:35
+98	newuser	newuser@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	15/3/2020 - 21:47:18
+99	qweqrwe	werwer@gmail.com	JBP7NwmwWTnwTPLpL30Il/wllvmtC4qeqFXHv+uq6JI=                    	15/3/2020 - 21:59:47
+101	myuser	myuser@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	15/3/2020 - 22:1:57
+104	marcosjdd	mkfarcos@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	15/3/2020 - 22:12:37
+105	adfeeeef	asdfew@gmail.com	zNbRl0aLG9wcZ0Kvloopc5gv6GooSfSOLBg5JElCZak=                    	15/3/2020 - 22:27:32
+106	anewnewuser	user@new.com	anmO/yGBfKSIl/PuxWyMs+mELkkNhH8c0jgcCrnUKRI=                    	15/3/2020 - 22:49:17
+108	marcosfuen	marcosfuen@gmail.com	XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=                    	15/3/2020 - 23:16:42
+109	something	something@gmail.com	P8m2iUWdc4+MiKOkiqnjNUIBa3pAUuABqqU2/KdIE8s=                    	15/3/2020 - 23:22:43
+\.
+
+
+--
+-- TOC entry 3024 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: backgrounds_id_backgrounds_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.backgrounds_id_backgrounds_seq', 75, true);
+
+
+--
+-- TOC entry 3025 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: project_id_project_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.project_id_project_seq', 66, true);
+
+
+--
+-- TOC entry 3026 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: subtask_id_subtask_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.subtask_id_subtask_seq', 47, true);
+
+
+--
+-- TOC entry 3027 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: task_id_task_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.task_id_task_seq', 48, true);
+
+
+--
+-- TOC entry 3028 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: users_id_users_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_id_users_seq', 109, true);
+
+
+--
+-- TOC entry 2873 (class 2606 OID 49379)
+-- Name: backgrounds backgrounds_dir_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.backgrounds
+    ADD CONSTRAINT backgrounds_dir_key UNIQUE (dir);
+
+
+--
+-- TOC entry 2875 (class 2606 OID 49377)
+-- Name: backgrounds backgrounds_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.backgrounds
+    ADD CONSTRAINT backgrounds_pkey PRIMARY KEY (id_backgrounds);
+
+
+--
+-- TOC entry 2867 (class 2606 OID 49329)
+-- Name: project project_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.project
+    ADD CONSTRAINT project_pkey PRIMARY KEY (id_project);
+
+
+--
+-- TOC entry 2871 (class 2606 OID 49361)
+-- Name: subtask subtask_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.subtask
+    ADD CONSTRAINT subtask_pkey PRIMARY KEY (id_subtask);
+
+
+--
+-- TOC entry 2869 (class 2606 OID 49345)
+-- Name: task task_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.task
+    ADD CONSTRAINT task_pkey PRIMARY KEY (id_task);
+
+
+--
+-- TOC entry 2877 (class 2606 OID 49393)
+-- Name: backgrounds unique_dir_project; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.backgrounds
+    ADD CONSTRAINT unique_dir_project UNIQUE (id_project, id_users);
+
+
+--
+-- TOC entry 2861 (class 2606 OID 49316)
+-- Name: users users_email_users_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_users_key UNIQUE (email_users);
+
+
+--
+-- TOC entry 2863 (class 2606 OID 49312)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id_users);
+
+
+--
+-- TOC entry 2865 (class 2606 OID 49314)
+-- Name: users users_username_users_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_username_users_key UNIQUE (username_users);
+
+
+--
+-- TOC entry 2882 (class 2606 OID 49387)
+-- Name: backgrounds backgrounds_id_project_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.backgrounds
+    ADD CONSTRAINT backgrounds_id_project_fkey FOREIGN KEY (id_project) REFERENCES public.project(id_project) NOT VALID;
+
+
+--
+-- TOC entry 2881 (class 2606 OID 49380)
+-- Name: backgrounds backgrounds_id_users_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.backgrounds
+    ADD CONSTRAINT backgrounds_id_users_fkey FOREIGN KEY (id_users) REFERENCES public.users(id_users);
+
+
+--
+-- TOC entry 2878 (class 2606 OID 49330)
+-- Name: project project_id_users_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.project
+    ADD CONSTRAINT project_id_users_fkey FOREIGN KEY (id_users) REFERENCES public.users(id_users);
+
+
+--
+-- TOC entry 2880 (class 2606 OID 49362)
+-- Name: subtask subtask_id_task_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.subtask
+    ADD CONSTRAINT subtask_id_task_fkey FOREIGN KEY (id_task) REFERENCES public.task(id_task);
+
+
+--
+-- TOC entry 2879 (class 2606 OID 49346)
+-- Name: task task_id_project_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.task
+    ADD CONSTRAINT task_id_project_fkey FOREIGN KEY (id_project) REFERENCES public.project(id_project);
+
+
+-- Completed on 2020-04-25 12:37:08 -04
+
+--
+-- PostgreSQL database dump complete
+--
+

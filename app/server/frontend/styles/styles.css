@@ -779,10 +779,138 @@ input[type="text"]:focus, input[type="password"]:focus{
         background-size: 1000% 100%;
     }
     #bttnIN{
-        height: 20%;
+        left: 50%;
+        height: 5vh;
+        width: 10vh;
+        font-size: 2vh;
     }
     #bttnUP{
-        height: 20%;
+        height: 5vh;
+        width: 10vh;
+        font-size: 2vh;
+        left: 75%;
+    }
+    #actionbuttonIN, #actionbuttonUP{
+        
+        width: 60%;
+        height: 15%;
+        font-size: 4vh;
+    }
+    input[type="text"], input[type="password"]{
+        width: 80%;
+        height: 15%;
+        font-size: 3vh;
+    }
+    .formbox{
+        font-size: 2vh;
+        width: 80%;
+        left: 10%;
+    }
+    #YEstart, #NOstart {
+        height: 10%;
+        width: 35%;
+        font-size: 2vh;
+    }
+    #username{
+        font-size: 3vh;
+    }
+    #email{
+        font-size: 1.5vh;
+    }
+    .profileinfo{
+        width: 20vh;
+    }
+    .pointertheme{
+        top: 45%;
+    }
+    .project{
+        height: 10%;
+    }
+    #projectscontainer{
+        width: 70%;
+        height: 80%;
+    }
+    .titleproject{
+        font-size: 2vh;
+        -webkit-text-stroke: 0.05vh var(--twoconstrastcolor);
+    }
+    .descriptionproject{
+
+        font-size: 1vh;
+        -webkit-text-stroke: 0.02vh var(--constrastcolor);
+    }
+    .pointerprojects{
+        top: 7%;
+        left: 72%;
+    }
+    #addproject{
+        top: 7%;
+        width: 2vh;
+        height: 2vh;
+    }
+    #newproject, .new{
+        height: 30%;
+    }
+    #exit, .exit{
+        left: 80%;
+    }
+    #titlecontainer{
+        font-size: 2vh;
+    }
+    #addtask{
+        width: 5vh;
+        height: 5vh;
+        left: 80%;
+    }
+    .task{
+        width: 80%;
+
+    }
+    .taskT{
+        font-size: 3vh;
+    }
+    .subtaskT{
+        font-size: 2vh;
+    }
+    #newtask{
+        padding-top: 15%;
+        height: 30%;
+    }
+    #newsubtask{
+        padding-top: 15%;
+        height: 30%;
+    }
+    #titleproject{
+        font-size: 3vh;
+    }
+    .setbackground p{
+        font-size: 1.3vh;
+    }
+    .toolbutton{
+        font-size: 2vh;
+    }
+    .setbackground div{
+        width: 4vh;
+        height: 4vh;
+        left: 60%;
+    }
+    #descriptionproject{
+        left: 30%;
+    }
+    #welcome{
+        font-size: 1.7vh;
+        -webkit-text-stroke: 0.035vh var(--twoconstrastcolor);
+    }
+    @keyframes hiddenprofile{
+        from{
+            width: 0vh;
+        }
+        to{
+            width: 20vh;
+        }
+    }
+    #getstarted{
+        font-size: 4vh;
     }
     .textlogo{
         left: 50%;
